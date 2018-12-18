@@ -3,5 +3,5 @@
 Requirements
 * ansible
 * pip install openshift
-* access to kubernetes cluter
+* access to kubernetes cluster
 * docker
