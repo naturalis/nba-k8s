@@ -1,0 +1,51 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nba-docs-swagger
+  labels:
+    app: nba-docs-swagger
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: nba-docs-swagger
+      labels:
+        app: nba-docs-swagger
+    spec:
+      #      hostAliases:
+      #      - ip: "145.136.241.188"
+      #        hostnames:
+      #        - "api.biodiversitydata.nl"
+      #        - "data.biodiversitydata.nl"
+      containers:
+      - name: nba-docs-swagger
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          httpGet:
+            path: /endpoints-reference
+            port: 80
+        livenessProbe:
+          initialDelaySeconds: 120
+          periodSeconds: 60
+          httpGet:
+            path: /endpoints-reference
+            port: 80
+          failureThreshold: 10
+        resources:
+          requests:
+            memory: "256Mi"
+          limits:
+            memory: "384Mi"
+        image: naturalis/swagger-ui:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: "VALIDATOR_URL"
+          value: "null"
+        - name: "API_URL"
+          value: "https://nba-api-test.k2.k8s.naturalis.nl/v2/reference-doc"
+        - name: "NBA_PUBLIC_URL"
+          value: "https\\:\\/\\/nba-api-test.k2.k8s.naturalis.nl\\/v2"

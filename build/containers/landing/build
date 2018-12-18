@@ -1,0 +1,2 @@
+docker build -t naturalis/nba-landing:1 .
+docker push naturalis/nba-landing:1

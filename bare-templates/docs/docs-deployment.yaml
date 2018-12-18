@@ -1,0 +1,54 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nba-docs
+  labels:
+    app: nba-docs
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: nba-docs
+      labels:
+        app: nba-docs
+    spec:
+      containers:
+      - name: nba-docs
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          httpGet:
+            path: /en/latest/
+            port: 80
+        livenessProbe:
+          initialDelaySeconds: 120
+          periodSeconds: 60
+          httpGet:
+            path: /en/latest/
+            port: 80
+          failureThreshold: 10
+        resources:
+          requests:
+            memory: "256Mi"
+          limits:
+            memory: "384Mi"
+        image: naturalis/nba-docs:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: "appendPort"
+          value: "false"
+        - name: "NBADOCS_HOST"
+          value: "docs-api-test.k2.k8s.naturalis.nl"
+        - name: "NBADOCS_PORT"
+          value: "80"
+        - name: "NBADOCS_PATH"
+          value: "en/latest"
+        - name: "SWAGGER_UI_URL"
+          value: "https://docs-api-test.k2.k8s.naturalis.nl/endpoints-reference"
+        - name: "NBA_BASE_URL"
+          value: "https://nba-api-test.k2.k8s.naturalis.nl"
+        - name: "SCRATCHPAD_URL"
+          value: "https://nba-api-test.k2.k8s.naturalis.nl/scratchpad"

@@ -1,0 +1,18 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nba-direct-api
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/whitelist-source-range: "{{nba_direct_query_allowed_ips}}"
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+  - host: "{{ nba_base_url }}"
+    http:
+      paths:
+      - path: /direct-query
+        backend:
+          serviceName: nba-direct-query-api
+          servicePort: 5000

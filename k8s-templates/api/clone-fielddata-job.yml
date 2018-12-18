@@ -1,0 +1,39 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: field-metadata-clone-job
+  labels:
+    app: field-metadata-clone-job
+spec:
+  template:
+    metadata:
+      name: field-metadata-clone-job
+      labels:
+        app: field-metadata-clone-job
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: field-metadata-clone-job
+        image: alpine:3.6
+        imagePullPolicy: Always
+        command: ["/bin/sh"]
+        args:
+        - -c
+        - >
+          apk add --no-cache git
+          && cd /field-metadata
+          && rm -fr /field-metadata/*
+          && rm -fr .git
+          && git clone https://github.com/naturalis/nba-fieldinfo-metadata . -b $tag
+        env:
+        - name: tag
+          value: "{{ nba_metadata_commit }}"
+        volumeMounts:
+        - name: field-metadata-config
+          mountPath: /field-metadata
+      volumes:
+      - name: field-metadata-config
+        persistentVolumeClaim:
+          claimName: field-metadata-config
+

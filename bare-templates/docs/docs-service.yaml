@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nba-docs
+spec:
+  type: ClusterIP
+  selector:
+    app: nba-docs
+  ports:
+  - port: 80

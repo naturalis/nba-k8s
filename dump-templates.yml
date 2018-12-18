@@ -1,0 +1,37 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    recreate: false
+    dump_dir: bare-templates
+  tasks:
+
+    - name: cleanup dump directory
+      file:
+        state: absent
+        path: "{{ dump_dir }}"
+      when: recreate == true
+
+    - name: create dump diretory
+      file:
+        state: directory
+        path: "{{ dump_dir }}"
+
+    - name: create direcotry tree in dump
+      file:
+        state: directory
+        path: "{{dump_dir}}/{{item.path }}"
+      with_filetree:
+        - "k8s-templates"
+      when: item.state == "directory"
+
+    - name: dump k8s-templates
+      template:
+        src: k8s-templates/{{ item.path }}
+        dest: "{{ dump_dir}}/{{item.path }}"
+      with_filetree:
+        - "k8s-templates"
+      when: >
+        item.state == "file" and
+        (item.path| splitext)[1] in (".yaml",".yml")

@@ -1,0 +1,159 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+
+    - name: BUILD | build elasticsearch image
+      docker_image:
+        path: build/containers/elasticsearch/
+        name: naturalis/nba-elasticsearch
+        tag: "{{elasticsearch_version}}"
+        push: yes
+      when: build_images is defined
+
+    - name: RESOURCES | create independent resources
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', item) }}"
+      loop:
+        - "k8s-templates/elasticsearch/configmap.yaml"
+        - "k8s-templates/elasticsearch/data-serviceaccount.yaml"
+        - "k8s-templates/elasticsearch/master-serviceaccount.yaml"
+        - "k8s-templates/elasticsearch/data-svc.yml"
+        - "k8s-templates/elasticsearch/master-svc.yaml"
+        - "k8s-templates/elasticsearch/elasticsearch-svc.yml"
+        - "k8s-templates/api/etcnba-configmap.yaml"
+        - "k8s-templates/api/standalone-configmap.yaml"
+        - "k8s-templates/api/fielddata-pvc.yaml"
+        - "k8s-templates/api/dwca-pvc.yaml"
+        - "k8s-templates/ingress/api-ingress.yml"
+        - "k8s-templates/ingress/purl-ingress.yaml"
+        - "k8s-templates/ingress/docs-ingress.yaml"
+        - "k8s-templates/ingress/docs-ingress.yaml"
+        - "k8s-templates/ingress/direct-api-ingress.yml"
+        - "k8s-templates/purl/log4j2.xml-configmap.yaml"
+        - "k8s-templates/purl/purl.properties-configmap.yaml"
+        - "k8s-templates/purl/standalone.xml-configmap.yaml"
+
+    - name: APPS | create elasticsearch control plane
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', 'k8s-templates/elasticsearch/master-statefulset.yaml') }}"
+      register: es_master_ss_create
+
+    - name: APPS | check if controlplane is up
+      k8s_facts:
+        kind: StatefulSet
+        namespace: "{{ nba_namespace }}"
+        name: elasticsearch-master
+      register: es_master_ss
+      retries: 10
+      delay: 30
+      until: >
+        es_master_ss.resources[0].status.readyReplicas is defined and
+        es_master_ss.resources[0].status.readyReplicas == 3
+
+    - name: APPS | build-in pause for controlplane to join
+      pause:
+        seconds: 30
+      when: es_master_ss_create.changed
+
+    - name: APPS | create elasticsearch data statefulset
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', 'k8s-templates/elasticsearch/data-statefullset.yaml') }}"
+      register: es_data_ss_create
+
+    - name: APPS | check if datanodes are up
+      k8s_facts:
+        kind: StatefulSet
+        namespace: "{{ nba_namespace }}"
+        name: elasticsearch-data
+      register: es_data_ss
+      retries: 10
+      delay: 30
+      until: >
+        es_data_ss.resources[0].status.readyReplicas is defined and
+        es_data_ss.resources[0].status.readyReplicas == number_of_data_nodes
+
+    - name: APPS | build-in pause for datanodes to join
+      pause:
+        seconds: 30
+      when: es_data_ss_create.changed
+
+    - name: APPS | populate dwca and metadataconfigs
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', item ) }}"
+      loop:
+        - "k8s-templates/api/clone-fielddata-job.yml"
+        - "k8s-templates/api/clone-dwca-job.yml"
+
+    - name: APPS | create nba api apps
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', item ) }}"
+      loop:
+        - "k8s-templates/api/nba-deployment.yaml"
+        - "k8s-templates/api/nba-service.yaml"
+
+    - name: APPS | create nba purl apps
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', item ) }}"
+      loop:
+        - "k8s-templates/purl/purl-deployment.yaml"
+        - "k8s-templates/purl/purl-service.yaml"
+
+    - name: APPS | create nba landing page apps
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', item ) }}"
+      loop:
+        - "k8s-templates/landing/landing-deployment.yaml"
+        - "k8s-templates/landing/landing-service.yaml"
+
+    - name: APPS | create nba docs
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', item ) }}"
+      loop:
+        - "k8s-templates/docs/docs-deployment.yaml"
+        - "k8s-templates/docs/docs-swagger-deployment.yaml"
+        - "k8s-templates/docs/docs-service.yaml"
+        - "k8s-templates/docs/docs-swagger-service.yaml"
+
+    - name: APPS | create nba scratchpad
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', item ) }}"
+      loop:
+        - "k8s-templates/scratchpad/scratchpad-deployment.yaml"
+        - "k8s-templates/scratchpad/scratchpad-service.yaml"
+      tags:
+        - scratchpad
+
+    - name: APPS | create direct query api
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', item ) }}"
+      loop:
+        - "k8s-templates/nba-direct-api/nba-api-direct-query-deployment.yaml"
+        - "k8s-templates/nba-direct-api/nba-api-direct-query-service.yaml"
+      tags:
+        - nba-direct-query
+
+    - name: APPS | create elasticsearch node exporter
+      k8s:
+        namespace: "{{ nba_namespace }}"
+        definition: "{{ lookup('template', item ) }}"
+      loop:
+        - "k8s-templates/elasticsearch_node_exporter/deployment.yml"
+        - "k8s-templates/elasticsearch_node_exporter/service.yml"
+      tags:
+        - elasticsearch-node-exporter
+
+
+
+

@@ -1,0 +1,16 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nba-purl-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: "nba-purl-test.k2.k8s.naturalis.nl"
+    http:
+      paths:
+      - backend:
+          serviceName: nba-purl
+          servicePort: 8080
+

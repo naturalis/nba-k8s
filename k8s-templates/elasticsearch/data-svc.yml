@@ -1,0 +1,22 @@
+---
+# Source: elasticsearch/templates/client-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: elasticsearch
+    component: "data"
+    heritage: Tiller
+  name: elasticsearch
+spec:
+  ports:
+    - name: http
+      port: 9200
+      targetPort: http
+    - name: transport
+      port: 9300
+      targetPort: transport
+  selector:
+    app: elasticsearch
+    component: "data"
+  type: ClusterIP

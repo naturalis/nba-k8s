@@ -1,0 +1,76 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nba-api
+  labels:
+    app: nba-api
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: nba-api
+      labels:
+        app: nba-api
+    spec:
+      containers:
+      - name: nba-api
+        image: naturalis/nba-api:V2.18-82364ca
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          httpGet:
+            path: /v2/ping
+            port: 8080
+        livenessProbe:
+          initialDelaySeconds: 120
+          periodSeconds: 60
+          httpGet:
+            path: /v2/ping
+            port: 8080
+          failureThreshold: 10
+        resources:
+          requests:
+            memory: "2Gi"
+          limits:
+            memory: "5Gi"
+        ports:
+        - containerPort: 8080
+        env:
+        - name: "JAVA_OPTS"
+          value: "-Xms1g -Xmx4g -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS -Djava.awt.headless=true"
+        volumeMounts:
+          #        - mountPath: /etc/nba/nba.properties
+          #          name: config
+          #          subPath: nba.properties
+          #        - mountPath: /etc/nba/log4j2.xml
+          #          name: log4j2xml
+          #          subPath: log4j2.xml
+        - mountPath: /etc/nba
+          name: etcnba
+        - mountPath: /opt/jboss/wildfly/standalone/configuration/standalone.xml
+          name: standalonexml
+          subPath: standalone.xml
+        - mountPath: /etc/nba/dwca
+          name: dwca-config
+        - mountPath: /etc/nba/metadata
+          name: field-metadata-config
+      volumes:
+        #      - name: config
+        #        configMap:
+        #          name: nba.properties
+      - name: standalonexml
+        configMap:
+          name: standalonexml
+          #      - name: log4j2xml
+          #        configMap:
+          #          name: log4j2xml
+      - name: etcnba
+        configMap:
+          name: etc-nba
+      - name: dwca-config
+        persistentVolumeClaim:
+          claimName: dwca-config
+      - name: field-metadata-config
+        persistentVolumeClaim:
+          claimName: field-metadata-config

@@ -1,0 +1,56 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nba-scratchpad
+  labels:
+    app: nba-scratchpad
+spec:
+  replicas: {{ scratchpad_replicas }}
+  template:
+    metadata:
+      name: nba-scratchpad
+      labels:
+        app: nba-scratchpad
+    spec:
+      #      hostAliases:
+      #      - ip: "145.136.241.188"
+      #        hostnames:
+      #        - "api.biodiversitydata.nl"
+      #        - "data.biodiversitydata.nl"
+      containers:
+      - name: nba-scratchpad
+        readinessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          httpGet:
+            path: /scratchpad
+            port: 80
+        livenessProbe:
+          initialDelaySeconds: 60
+          periodSeconds: 60
+          httpGet:
+            path: /scratchpad
+            port: 80
+          failureThreshold: 10
+        resources:
+          requests:
+            memory: "128Mi"
+          limits:
+            memory: "256Mi"
+
+        image: {{ scratchpad_docker_image }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: "NBA_ADDRESS"
+          value: "{{nba_base_url}}"
+        - name: "NBA_PORT"
+          value: "80"
+        - name: "NBA_TIMEOUT"
+          value: "10"
+        - name: "PUBLIC_NBA_FULL_ADDRESS"
+          value: "{{ nba_base_url}}"
+        - name: "LISTENER_BASE_PATH"
+          value: "/scratchpad"

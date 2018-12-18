@@ -1,0 +1,44 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nba-direct-query-api
+  labels:
+    app: nba-direct-query-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: nba-direct-query-api
+      labels:
+        app: nba-direct-query-api
+    spec:
+      containers:
+      - name: nba-direct-query-api
+        readinessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          httpGet:
+            path: /
+            port: 5000
+        livenessProbe:
+          initialDelaySeconds: 60
+          periodSeconds: 60
+          httpGet:
+            path: /
+            port: 5000
+          failureThreshold: 10
+        resources:
+          requests:
+            memory: "128Mi"
+          limits:
+            memory: "256Mi"
+        image: naturalis/nba-direct-query-api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: "ES_ADDRESS"
+          value: "elasticsearch"
+        - name: "ES_PORT"
+          value: "9200"

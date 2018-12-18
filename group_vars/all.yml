@@ -1,0 +1,42 @@
+---
+#global
+nba_namespace: nba-v2-production
+# elasticsearch
+elasticsearch_version: 5.6.13
+number_of_data_nodes: 4
+elasticsearch_cluster_name: nba
+
+# nba
+nba_docker_image: naturalis/nba-api:V2.18-82364ca
+nba_replicas: 2
+nba_metadata_commit: "2"
+nba_dwca_commit: master
+nba_base_url: nba-api-test.k2.k8s.naturalis.nl
+
+# purl
+purl_docker_image: naturalis/nba-purl:v2.18.2
+purl_replicas: 2
+purl_base_url: nba-purl-test.k2.k8s.naturalis.nl
+
+# docs
+docs_docker_image: naturalis/nba-docs:latest
+docs_replicas: 2
+docs_base_url: docs-api-test.k2.k8s.naturalis.nl
+docs_base_www_url: www-api-test.k2.k8s.naturalis.nl
+# docs endpoints
+docs_endpoints_docker_image: naturalis/swagger-ui:latest
+docs_endpoints_replicas: 2
+
+# scratchpad
+scratchpad_docker_image: naturalis/nba_scratchpad:path-fix
+scratchpad_replicas: 2
+
+# landing
+landing_docker_image: naturalis/nba-entrypoint:v1
+landing_replicas: 2
+
+# direct query api (should be depreciated)
+nba_direct_query_image: naturalis/nba-direct-query-api:latest
+nba_direct_query_replicas: 1
+nba_direct_query_allowed_ips: "145.136.241.94/32,172.16.45.0/24"
+

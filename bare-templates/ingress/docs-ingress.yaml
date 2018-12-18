@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nba-docs-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://www-api-test.k2.k8s.naturalis.nl/(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://docs-api-test.k2.k8s.naturalis.nl/$1
+spec:
+  rules:
+  - host: "docs-api-test.k2.k8s.naturalis.nl"
+    http:
+      paths:
+      - path: /en/latest
+        backend:
+          serviceName: nba-docs
+          servicePort: 80
+      - path: /endpoints-reference
+        backend:
+          serviceName: nba-docs-swagger
+          servicePort: 80
+
+  - host: "www-api-test.k2.k8s.naturalis.nl"
+    http:
+      paths:
+      - path: /en/latest
+        backend:
+          serviceName: nba-docs
+          servicePort: 80

@@ -1,0 +1,27 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nba-api-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://{{nba_base_url}}/v0(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://{{nba_base_url}}/
+spec:
+  rules:
+  - host: "{{ nba_base_url }}"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nba-landing
+          servicePort: 80
+      - path: /v2
+        backend:
+          serviceName: nba-api
+          servicePort: 8080
+      - path: /scratchpad
+        backend:
+          serviceName: nba-scratchpad
+          servicePort: 80
+
