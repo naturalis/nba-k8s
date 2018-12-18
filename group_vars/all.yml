@@ -10,7 +10,7 @@ elasticsearch_cluster_name: nba
 nba_docker_image: naturalis/nba-api:V2.18-82364ca
 nba_replicas: 2
 nba_metadata_commit: "2"
-nba_dwca_commit: master
+nba_dwca_commit: v2.18.0
 nba_base_url: nba-api-test.k2.k8s.naturalis.nl
 
 # purl
