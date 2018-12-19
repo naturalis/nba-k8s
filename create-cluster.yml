@@ -123,6 +123,8 @@
         - "k8s-templates/docs/docs-swagger-deployment.yaml"
         - "k8s-templates/docs/docs-service.yaml"
         - "k8s-templates/docs/docs-swagger-service.yaml"
+      tags:
+        - docs
 
     - name: APPS | create nba scratchpad
       k8s:
