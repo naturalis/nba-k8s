@@ -64,16 +64,16 @@ spec:
             resourceFieldRef:
               resource: limits.cpu
         - name: ES_JAVA_OPTS
-          value: "-Djava.net.preferIPv4Stack=true -Xms512m -Xmx512m "
+          value: "-Djava.net.preferIPv4Stack=true -Xms1g -Xmx1g"
         - name: MINIMUM_MASTER_NODES
           value: "2"
         resources:
             limits:
-              cpu: "1"
-              memory: 1024Mi
+              cpu: "2"
+              memory: 4096Mi
             requests:
               cpu: 25m
-              memory: 512Mi
+              memory: 3000Mi
         readinessProbe:
           httpGet:
             path: /_cluster/health?local=true
