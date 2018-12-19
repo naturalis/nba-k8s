@@ -19,7 +19,7 @@ purl_replicas: 2
 purl_base_url: nba-purl-test.k2.k8s.naturalis.nl
 
 # docs
-docs_docker_image: naturalis/nba-docs:latest
+docs_docker_image: naturalis/nba-docs:V2.18-docsV0-2018-12-18
 docs_replicas: 2
 docs_base_url: docs-api-test.k2.k8s.naturalis.nl
 docs_base_www_url: www-api-test.k2.k8s.naturalis.nl
@@ -32,7 +32,7 @@ scratchpad_docker_image: naturalis/nba_scratchpad:path-fix
 scratchpad_replicas: 2
 
 # landing
-landing_docker_image: naturalis/nba-entrypoint:v1
+landing_docker_image: naturalis/nba-landing:1
 landing_replicas: 2
 
 # direct query api (should be depreciated)
