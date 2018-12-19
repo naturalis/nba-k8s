@@ -28,7 +28,7 @@ spec:
           && git clone https://github.com/naturalis/DWCAConfig . -b $DWCA_TAG
         env:
         - name: DWCA_TAG
-          value: "6ffa432"
+          value: "v2.18.0"
         volumeMounts:
         - name: dwca-config
           mountPath: /dwca

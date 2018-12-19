@@ -1,0 +1,2 @@
+docker build -t naturalis/nba-maintenance:19-12-2018 .
+docker push naturalis/nba-maintenance:19-12-2018

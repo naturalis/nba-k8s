@@ -33,7 +33,7 @@ spec:
             memory: "128Mi"
           limits:
             memory: "256Mi"
-        image: naturalis/nba-entrypoint:v1
+        image: naturalis/nba-landing:1
         imagePullPolicy: Always
         ports:
         - containerPort: 80

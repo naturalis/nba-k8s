@@ -24,7 +24,7 @@ data:
     # for the actual unitID. Use ${sourceSystemId} as a
     # placeholder for the source system's original ID.
     bioportal.specimen.url=http://bioportal.naturalis.nl/specimen/${unitID}
-    xenocanto.observation.url=https://www.xeno-canto.org/${unitID}
+    xenocanto.observation.url=https://www.xeno-canto.org/${sourceSystemId}
     waarneming.observation.url=https://waarneming.nl/observation/${sourceSystemId}
 kind: ConfigMap
 metadata:

@@ -33,7 +33,7 @@ spec:
             memory: "256Mi"
           limits:
             memory: "384Mi"
-        image: naturalis/nba-docs:latest
+        image: naturalis/nba-docs:V2.18-docsV0-2018-12-18
         imagePullPolicy: Always
         ports:
         - containerPort: 80
