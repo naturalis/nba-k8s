@@ -16,9 +16,9 @@ data:
     # http://data.biodiversitydata.nl. This setting is
     # only relevant for the welcome page.
     #purl.baseurl=http://data.biodiversitydata.nl
-    purl.baseurl=http://nba-purl-test.k2.k8s.naturalis.nl
+    purl.baseurl=http://data.biodiversitydata.nl
 
-    nba.baseurl=http://nba-api-test.k2.k8s.naturalis.nl/v2
+    nba.baseurl=http://api.biodiversitydata.nl/v2
 
     # HTML detail pages. Use ${unitID} as a placeholder
     # for the actual unitID. Use ${sourceSystemId} as a

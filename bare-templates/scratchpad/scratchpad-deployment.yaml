@@ -45,12 +45,12 @@ spec:
         - containerPort: 80
         env:
         - name: "NBA_ADDRESS"
-          value: "nba-api-test.k2.k8s.naturalis.nl"
+          value: "api.biodiversitydata.nl"
         - name: "NBA_PORT"
           value: "80"
         - name: "NBA_TIMEOUT"
           value: "10"
         - name: "PUBLIC_NBA_FULL_ADDRESS"
-          value: "nba-api-test.k2.k8s.naturalis.nl"
+          value: "api.biodiversitydata.nl"
         - name: "LISTENER_BASE_PATH"
           value: "/scratchpad"

@@ -5,11 +5,11 @@ metadata:
   name: nba-docs-ingress
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/redirect-regex: ^https://www-api-test.k2.k8s.naturalis.nl/(.*)
-    traefik.ingress.kubernetes.io/redirect-replacement: https://docs-api-test.k2.k8s.naturalis.nl/$1
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://www.biodiversitydata.nl/(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://docs.biodiversitydata.nl/$1
 spec:
   rules:
-  - host: "docs-api-test.k2.k8s.naturalis.nl"
+  - host: "docs.biodiversitydata.nl"
     http:
       paths:
       - path: /en/latest
@@ -21,7 +21,7 @@ spec:
           serviceName: nba-docs-swagger
           servicePort: 80
 
-  - host: "www-api-test.k2.k8s.naturalis.nl"
+  - host: "www.biodiversitydata.nl"
     http:
       paths:
       - path: /en/latest

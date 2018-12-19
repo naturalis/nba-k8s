@@ -5,11 +5,11 @@ metadata:
   name: nba-api-ingress
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/redirect-regex: ^https://nba-api-test.k2.k8s.naturalis.nl/v0(.*)
-    traefik.ingress.kubernetes.io/redirect-replacement: https://nba-api-test.k2.k8s.naturalis.nl/
+    traefik.ingress.kubernetes.io/redirect-regex: ^https://api.biodiversitydata.nl/v0(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://api.biodiversitydata.nl/
 spec:
   rules:
-  - host: "nba-api-test.k2.k8s.naturalis.nl"
+  - host: "api.biodiversitydata.nl"
     http:
       paths:
       - path: /

@@ -46,6 +46,6 @@ spec:
         - name: "VALIDATOR_URL"
           value: "null"
         - name: "API_URL"
-          value: "https://nba-api-test.k2.k8s.naturalis.nl/v2/reference-doc"
+          value: "https://api.biodiversitydata.nl/v2/reference-doc"
         - name: "NBA_PUBLIC_URL"
-          value: "https\\:\\/\\/nba-api-test.k2.k8s.naturalis.nl\\/v2"
+          value: "https\\:\\/\\/api.biodiversitydata.nl\\/v2"

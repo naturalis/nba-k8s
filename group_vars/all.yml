@@ -11,18 +11,22 @@ nba_docker_image: naturalis/nba-api:V2.18-82364ca
 nba_replicas: 2
 nba_metadata_commit: "2"
 nba_dwca_commit: v2.18.0
-nba_base_url: nba-api-test.k2.k8s.naturalis.nl
+#nba_base_url: nba-api-test.k2.k8s.naturalis.nl
+nba_base_url: api.biodiversitydata.nl
 
 # purl
 purl_docker_image: naturalis/nba-purl:v2.18.2
 purl_replicas: 2
-purl_base_url: nba-purl-test.k2.k8s.naturalis.nl
+#purl_base_url: nba-purl-test.k2.k8s.naturalis.nl
+purl_base_url: data.biodiversitydata.nl
 
 # docs
 docs_docker_image: naturalis/nba-docs:V2.18-docsV0-2018-12-18
 docs_replicas: 2
-docs_base_url: docs-api-test.k2.k8s.naturalis.nl
-docs_base_www_url: www-api-test.k2.k8s.naturalis.nl
+#docs_base_url: docs-api-test.k2.k8s.naturalis.nl
+docs_base_url: docs.biodiversitydata.nl
+#docs_base_www_url: www-api-test.k2.k8s.naturalis.nl
+docs_base_www_url: www.biodiversitydata.nl
 # docs endpoints
 docs_endpoints_docker_image: naturalis/swagger-ui:latest
 docs_endpoints_replicas: 2

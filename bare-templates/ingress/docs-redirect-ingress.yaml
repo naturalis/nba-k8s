@@ -8,14 +8,14 @@ metadata:
     traefik.ingress.kubernetes.io/app-root: "/en/latest/"
 spec:
   rules:
-  - host: "docs-api-test.k2.k8s.naturalis.nl"
+  - host: "docs.biodiversitydata.nl"
     http:
       paths:
       - path: /
         backend:
           serviceName: nba-docs
           servicePort: 80
-  - host: "www-api-test.k2.k8s.naturalis.nl"
+  - host: "www.biodiversitydata.nl"
     http:
       paths:
       - path: /

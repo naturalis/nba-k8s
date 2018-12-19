@@ -29,7 +29,7 @@
         - "k8s-templates/api/dwca-pvc.yaml"
         - "k8s-templates/ingress/api-ingress.yml"
         - "k8s-templates/ingress/purl-ingress.yaml"
-        - "k8s-templates/ingress/docs-ingress.yaml"
+        - "k8s-templates/ingress/docs-redirect-ingress.yaml"
         - "k8s-templates/ingress/docs-ingress.yaml"
         - "k8s-templates/ingress/direct-api-ingress.yml"
         - "k8s-templates/purl/log4j2.xml-configmap.yaml"

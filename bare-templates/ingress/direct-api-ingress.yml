@@ -9,7 +9,7 @@ metadata:
     traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-  - host: "nba-api-test.k2.k8s.naturalis.nl"
+  - host: "api.biodiversitydata.nl"
     http:
       paths:
       - path: /direct-query
