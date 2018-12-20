@@ -41,7 +41,7 @@ spec:
         - name: "appendPort"
           value: "false"
         - name: "NBADOCS_HOST"
-          value: "docs-api-test.k2.k8s.naturalis.nl"
+          value: "docs.biodiversitydata.nl"
         - name: "NBADOCS_PORT"
           value: "80"
         - name: "NBADOCS_PATH"
