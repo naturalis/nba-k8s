@@ -32,7 +32,7 @@ docs_endpoints_docker_image: naturalis/swagger-ui:latest
 docs_endpoints_replicas: 2
 
 # scratchpad
-scratchpad_docker_image: naturalis/nba_scratchpad:path-fix
+scratchpad_docker_image: naturalis/nba_scratchpad:2
 scratchpad_replicas: 2
 
 # landing

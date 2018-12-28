@@ -39,7 +39,7 @@ spec:
           limits:
             memory: "256Mi"
 
-        image: naturalis/nba_scratchpad:path-fix
+        image: naturalis/nba_scratchpad:2
         imagePullPolicy: Always
         ports:
         - containerPort: 80
