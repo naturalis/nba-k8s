@@ -35,12 +35,16 @@
         - "k8s-templates/purl/log4j2.xml-configmap.yaml"
         - "k8s-templates/purl/purl.properties-configmap.yaml"
         - "k8s-templates/purl/standalone.xml-configmap.yaml"
+      tags:
+        - elasticsearch
 
     - name: APPS | create elasticsearch control plane
       k8s:
         namespace: "{{ nba_namespace }}"
         definition: "{{ lookup('template', 'k8s-templates/elasticsearch/master-statefulset.yaml') }}"
       register: es_master_ss_create
+      tags:
+        - elasticsearch
 
     - name: APPS | check if controlplane is up
       k8s_facts:
@@ -53,17 +57,23 @@
       until: >
         es_master_ss.resources[0].status.readyReplicas is defined and
         es_master_ss.resources[0].status.readyReplicas == 3
+      tags:
+        - elasticsearch
 
     - name: APPS | build-in pause for controlplane to join
       pause:
         seconds: 30
       when: es_master_ss_create.changed
+      tags:
+        - elasticsearch
 
     - name: APPS | create elasticsearch data statefulset
       k8s:
         namespace: "{{ nba_namespace }}"
         definition: "{{ lookup('template', 'k8s-templates/elasticsearch/data-statefullset.yaml') }}"
       register: es_data_ss_create
+      tags:
+        - elasticsearch
 
     - name: APPS | check if datanodes are up
       k8s_facts:
@@ -76,11 +86,15 @@
       until: >
         es_data_ss.resources[0].status.readyReplicas is defined and
         es_data_ss.resources[0].status.readyReplicas == number_of_data_nodes
+      tags:
+        - elasticsearch
 
     - name: APPS | build-in pause for datanodes to join
       pause:
         seconds: 30
       when: es_data_ss_create.changed
+      tags:
+        - elasticsearch
 
     - name: APPS | populate dwca and metadataconfigs
       k8s:

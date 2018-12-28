@@ -104,7 +104,7 @@ spec:
     spec:
       accessModes:
         - "ReadWriteOnce"
-      storageClassName: "ceph"
+      storageClassName: "example-nfs"
       resources:
         requests:
           storage: "4Gi"

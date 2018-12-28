@@ -104,7 +104,7 @@ spec:
     spec:
       accessModes:
         - "ReadWriteOnce"
-      storageClassName: "ceph"
+      storageClassName: "lvm-local-storage"
       resources:
         requests:
           storage: "4Gi"
