@@ -382,7 +382,7 @@ data:
                 <filters>
                     <response-header name="server-header" header-name="Server" header-value="NBA-Wildfly/2"/>
                     <response-header name="x-powered-by-header" header-name="X-Powered-By" header-value="Undertow/1"/>
-                    <response-header name="Access-Control-Allow-Origin" header-name="Access-Control-Allow-Origin" header-value="*"/>
+                    <response-header name="Access-Control-Allow-Origin" header-name="Access-Control-Allow-Origin" header-value="null"/>
                     <response-header name="Access-Control-Allow-Methods" header-name="Access-Control-Allow-Methods" header-value="GET, POST"/>
                     <response-header name="Access-Control-Allow-Headers" header-name="Access-Control-Allow-Headers" header-value="accept, content-type, x-requested
     -with"/>
