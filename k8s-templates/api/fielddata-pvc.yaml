@@ -6,6 +6,7 @@ metadata:
   annotations:
     # volume.beta.kubernetes.io/storage-class: "nfs-ceph"
     volume.beta.kubernetes.io/storage-class: "example-nfs"
+    
 spec:
   accessModes:
     - ReadWriteMany
