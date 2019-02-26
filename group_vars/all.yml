@@ -15,7 +15,7 @@ nba_dwca_commit: v002
 nba_base_url: api.biodiversitydata.nl
 
 # purl
-purl_docker_image: naturalis/nba-purl:v2.18.3
+purl_docker_image: naturalis/nba-purl:v2.18.4
 purl_replicas: 2
 #purl_base_url: nba-purl-test.k2.k8s.naturalis.nl
 purl_base_url: data.biodiversitydata.nl
