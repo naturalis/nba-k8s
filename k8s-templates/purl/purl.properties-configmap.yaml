@@ -16,7 +16,7 @@ data:
     # http://data.biodiversitydata.nl. This setting is
     # only relevant for the welcome page.
     #purl.baseurl=http://data.biodiversitydata.nl
-    purl.baseurl=http://{{purl_base_url}}
+    purl.baseurl=https://{{purl_base_url}}
 
     nba.baseurl=http://{{nba_base_url}}/v2
 
