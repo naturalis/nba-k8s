@@ -7,7 +7,8 @@ number_of_data_nodes: 4
 elasticsearch_cluster_name: nba
 
 # nba
-nba_docker_image: naturalis/nba-api:V2.18-82364ca
+#nba_docker_image: naturalis/nba-api:V2.18-82364ca
+nba_docker_image: naturalis/nba-api:V2.19-a5a48fe
 nba_replicas: 2
 nba_metadata_commit: "2"
 nba_dwca_commit: v002 
