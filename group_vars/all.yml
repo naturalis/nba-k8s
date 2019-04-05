@@ -22,7 +22,8 @@ purl_replicas: 2
 purl_base_url: data.biodiversitydata.nl
 
 # docs
-docs_docker_image: naturalis/nba-docs:V2.18-docsV0-2018-12-18
+#docs_docker_image: naturalis/nba-docs:V2.18-docsV0-2018-12-18
+docs_docker_image: naturalis/nba-docs:V2.19-docsV0-2019-04-04
 docs_replicas: 2
 #docs_base_url: docs-api-test.k2.k8s.naturalis.nl
 docs_base_url: docs.biodiversitydata.nl
