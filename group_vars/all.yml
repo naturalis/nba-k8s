@@ -11,7 +11,7 @@ elasticsearch_cluster_name: nba
 nba_docker_image: naturalis/nba-api:V2.19-a5a48fe
 nba_replicas: 2
 nba_metadata_commit: "2"
-nba_dwca_commit: v002 
+nba_dwca_commit: v003 
 #nba_base_url: nba-api-test.k2.k8s.naturalis.nl
 nba_base_url: api.biodiversitydata.nl
 
